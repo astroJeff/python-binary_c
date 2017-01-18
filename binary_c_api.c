@@ -87,6 +87,7 @@ int main(){
     int ktype_2;
     int comenv_count;
     int evol_flag = 0;
+    char** evol_hist;
 
     out = run_binary (m1, m2, orbital_period,  eccentricity, metallicity,  maxt,
                       v_kick_1, theta_kick_1, phi_kick_1,
@@ -94,7 +95,7 @@ int main(){
                       &m1_out, &m2_out, &orbital_separation_out,
                       &eccentricity_out, &system_velocity, &L_x,
                       &time_SN_1, &time_SN_2, &ktype_1, &ktype_2,
-                      &comenv_count, evol_flag);
+                      &comenv_count, evol_flag, evol_hist);
 
 
 }
@@ -106,7 +107,7 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
                  double* m1_out, double* m2_out, double* orbital_separation_out,
                  double* eccentricity_out, double* system_velocity, double* L_x,
                  double* time_SN_1, double* time_SN_2, int* ktype_1, int* ktype_2,
-                 int* comenv_count, int evol_flag)
+                 int* comenv_count, int evol_flag, char** evol_hist)
 {
 
     const long int N=100; /* number of systems */
@@ -203,9 +204,11 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
        int nbytes = 0;
        binary_c_buffer_info(stardata,&buffer,&nbytes);
        binary_c_buffer_empty_buffer(stardata);
+
+      *evol_hist = malloc(nbytes*sizeof(char));
+      *evol_hist = buffer;
     }
 
-    printf(buffer);
 
     *m1_out = stardata->star[0].mass;
     *m2_out = stardata->star[1].mass;

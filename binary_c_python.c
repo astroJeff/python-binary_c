@@ -121,6 +121,7 @@ static PyObject* binary_c_run_binary(PyObject *self, PyObject *args){
   double sn_kick_magnitude_2, sn_kick_theta_2, sn_kick_phi_2;
   double m1_out, m2_out, orbital_separation_out, eccentricity_out;
   double system_velocity, L_x, time_SN_1, time_SN_2;
+  char* evol_hist = NULL;
 
   /* Parse the input tuple */
   // if (!PyArg_ParseTuple(args, "ddddddd", &m1, &m2, &orbital_period, &eccentricity, &metallicity, &maxt, &sn_kick_magnitude_1))
@@ -129,17 +130,22 @@ static PyObject* binary_c_run_binary(PyObject *self, PyObject *args){
                         &sn_kick_magnitude_2, &sn_kick_theta_2, &sn_kick_phi_2))
     return NULL;
 
+  evol_flag = 1;
 
   out =  run_binary(m1, m2, orbital_period, eccentricity, metallicity, maxt,
                     sn_kick_magnitude_1, sn_kick_theta_1, sn_kick_phi_1,
                     sn_kick_magnitude_2, sn_kick_theta_2, sn_kick_phi_2,
                     &m1_out, &m2_out, &orbital_separation_out, &eccentricity_out,
                     &system_velocity, &L_x, &time_SN_1, &time_SN_2, &ktype_1, &ktype_2,
-                    &comenv_count, evol_flag);
+                    &comenv_count, evol_flag, &evol_hist);
+
 
   /* Return variables */
-  PyObject *ret = Py_BuildValue("ddddddddiii", m1_out, m2_out, orbital_separation_out, eccentricity_out,
-                                system_velocity, L_x, time_SN_1, time_SN_2, ktype_1, ktype_2, comenv_count);
+  PyObject *ret = Py_BuildValue("ddddddddiiis", m1_out, m2_out, orbital_separation_out, eccentricity_out,
+                                system_velocity, L_x, time_SN_1, time_SN_2, ktype_1, ktype_2, comenv_count, evol_hist);
+
+  /* Free evol_hist memory */
+  // free(evol_hist);
 
   return ret;
 }

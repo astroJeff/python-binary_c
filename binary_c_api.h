@@ -14,7 +14,7 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
                  double* m1_out, double* m2_out, double* orbital_separation_out,
                  double* eccentricity_out, double* system_velocity, double* L_x,
                  double* time_SN_1, double* time_SN_2, int* ktype_1, int* ktype_2,
-                 int* comenv_count, int evol_flag);
+                 int* comenv_count, int evol_flag, char** evol_hist);
 
 int run_binaries ( double m1, double m2, double orbital_period, double eccentricity, double metallicity, double maxt );
 
