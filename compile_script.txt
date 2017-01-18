@@ -1,0 +1,20 @@
+First, we need to compile binary_c_api.c into a shared library
+
+gcc binary_c_api.c -c -lbinary_c -lm -lc -fpic
+gcc -shared -o libbinary_c_api.so binary_c_api.o
+
+
+Next, we need to make sure that the current directory (that containing libbinary_c_api.so) is included in $LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=....
+
+
+Next, we compile the python setup.py script:
+python setup.py build_ext --inplace
+
+Within python, you should be able to now run:
+python python_API_test.py
+
+
+Or access the python functions within an ipython notebook:
+import binary_c
+binary_c.function_name()
