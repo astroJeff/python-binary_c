@@ -121,7 +121,7 @@ static PyObject* binary_c_run_binary(PyObject *self, PyObject *args){
   double sn_kick_magnitude_2, sn_kick_theta_2, sn_kick_phi_2;
   double m1_out, m2_out, orbital_separation_out, eccentricity_out;
   double system_velocity, L_x, time_SN_1, time_SN_2;
-  char* evol_hist = NULL;
+  char evol_hist[100000];
 
   /* Parse the input tuple */
   // if (!PyArg_ParseTuple(args, "ddddddd", &m1, &m2, &orbital_period, &eccentricity, &metallicity, &maxt, &sn_kick_magnitude_1))
@@ -137,7 +137,7 @@ static PyObject* binary_c_run_binary(PyObject *self, PyObject *args){
                     sn_kick_magnitude_2, sn_kick_theta_2, sn_kick_phi_2,
                     &m1_out, &m2_out, &orbital_separation_out, &eccentricity_out,
                     &system_velocity, &L_x, &time_SN_1, &time_SN_2, &ktype_1, &ktype_2,
-                    &comenv_count, evol_flag, &evol_hist);
+                    &comenv_count, evol_flag, evol_hist);
 
 
   /* Return variables */

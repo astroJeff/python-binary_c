@@ -25,13 +25,27 @@ def run_test_binary():
     m1_out, m2_out, orbital_separation_out, eccentricity_out, system_velocity, L_x, \
             time_SN_1, time_SN_2, ktype_1, ktype_2, comenv_count, evol_hist = output
 
+    # print evol_hist
+
     evol_steps = evol_hist.split("\n")
     # evol_steps = evol_steps["JEFF" in evol_steps]
+
+    n_comenv = "0"
+    evol_line = ""
 
     for s in evol_steps:
         if s.find("JEFF") == 0:
             print s
+            data = s.split(" ")
+            k1_before, k2_before, k1_after, k2_after = data[2], data[3], data[15], data[16]
+            # print s
+            if n_comenv != data[28]:
+                evol_line = evol_line + "(" + str(k1_before) + "-" + str(k2_before) + ":CE:" + str(k1_after) + "-" + str(k2_after) +  ")"
+                n_comenv = data[28]
+            else:
+                evol_line = evol_line + "(" + str(k1_before) + "-" + str(k2_before) + ":" + str(k1_after) + "-" + str(k2_after) +  ")"
 
+    print evol_line
 
     return output[:-1]
 

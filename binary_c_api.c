@@ -87,7 +87,7 @@ int main(){
     int ktype_2;
     int comenv_count;
     int evol_flag = 0;
-    char** evol_hist;
+    char* evol_hist;
 
     out = run_binary (m1, m2, orbital_period,  eccentricity, metallicity,  maxt,
                       v_kick_1, theta_kick_1, phi_kick_1,
@@ -107,7 +107,7 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
                  double* m1_out, double* m2_out, double* orbital_separation_out,
                  double* eccentricity_out, double* system_velocity, double* L_x,
                  double* time_SN_1, double* time_SN_2, int* ktype_1, int* ktype_2,
-                 int* comenv_count, int evol_flag, char** evol_hist)
+                 int* comenv_count, int evol_flag, char* evol_hist)
 {
 
     const long int N=100; /* number of systems */
@@ -203,10 +203,14 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
        char * buffer = NULL;
        int nbytes = 0;
        binary_c_buffer_info(stardata,&buffer,&nbytes);
+
+       strcpy(evol_hist, buffer);
+
        binary_c_buffer_empty_buffer(stardata);
 
-      *evol_hist = malloc(nbytes*sizeof(char));
-      *evol_hist = buffer;
+      // *evol_hist = malloc(nbytes*sizeof(char));
+      // *evol_hist = buffer;
+
     }
 
 
