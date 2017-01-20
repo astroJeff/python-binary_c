@@ -125,12 +125,12 @@ static PyObject* binary_c_run_binary(PyObject *self, PyObject *args){
 
   /* Parse the input tuple */
   // if (!PyArg_ParseTuple(args, "ddddddd", &m1, &m2, &orbital_period, &eccentricity, &metallicity, &maxt, &sn_kick_magnitude_1))
-  if (!PyArg_ParseTuple(args, "dddddddddddd", &m1, &m2, &orbital_period, &eccentricity, &metallicity, &maxt,
+  if (!PyArg_ParseTuple(args, "ddddddddddddi", &m1, &m2, &orbital_period, &eccentricity, &metallicity, &maxt,
                         &sn_kick_magnitude_1, &sn_kick_theta_1, &sn_kick_phi_1,
-                        &sn_kick_magnitude_2, &sn_kick_theta_2, &sn_kick_phi_2))
+                        &sn_kick_magnitude_2, &sn_kick_theta_2, &sn_kick_phi_2, &evol_flag))
     return NULL;
 
-  evol_flag = 1;
+  // evol_flag = 0;
 
   out =  run_binary(m1, m2, orbital_period, eccentricity, metallicity, maxt,
                     sn_kick_magnitude_1, sn_kick_theta_1, sn_kick_phi_1,

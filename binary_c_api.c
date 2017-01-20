@@ -200,6 +200,7 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
     /* Save binary's history to the char* buffer */
     if (evol_flag == 1)
     {
+
        char * buffer = NULL;
        int nbytes = 0;
        binary_c_buffer_info(stardata,&buffer,&nbytes);
