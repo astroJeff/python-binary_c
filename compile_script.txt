@@ -1,4 +1,8 @@
-First, we need to compile binary_c_api.c into a shared library
+First, we need to compile binary_c_api.c into a shared library. We can do this by either the short way
+
+make all
+
+or the long way
 
 gcc binary_c_api.c -c -lbinary_c -lm -lc -fpic
 gcc -shared -o libbinary_c_api.so binary_c_api.o
@@ -18,3 +22,7 @@ python python_API_test.py
 Or access the python functions within an ipython notebook:
 import binary_c
 binary_c.function_name()
+
+
+To remake, first, start by running
+make clean

@@ -83,10 +83,12 @@ int main(){
     double L_x;
     double time_SN_1;
     double time_SN_2;
+    double time_current;
     int ktype_1;
     int ktype_2;
     int comenv_count;
     int evol_flag = 0;
+    int dco_flag = 0;
     char* evol_hist;
 
     out = run_binary (m1, m2, orbital_period,  eccentricity, metallicity,  maxt,
@@ -94,25 +96,28 @@ int main(){
                       v_kick_2, theta_kick_2, phi_kick_2,
                       &m1_out, &m2_out, &orbital_separation_out,
                       &eccentricity_out, &system_velocity, &L_x,
-                      &time_SN_1, &time_SN_2, &ktype_1, &ktype_2,
-                      &comenv_count, evol_flag, evol_hist);
+                      &time_SN_1, &time_SN_2, &time_current,
+                      &ktype_1, &ktype_2, &comenv_count, evol_flag,
+                      evol_hist, dco_flag);
 
 
 }
 
 
-int run_binary ( double m1, double m2, double orbital_period, double eccentricity, double metallicity, double maxt,
+int run_binary ( double m1, double m2, double orbital_period, double eccentricity,
+                 double metallicity, double maxt,
                  double v_kick_1, double theta_kick_1, double phi_kick_1,
                  double v_kick_2, double theta_kick_2, double phi_kick_2,
                  double* m1_out, double* m2_out, double* orbital_separation_out,
                  double* eccentricity_out, double* system_velocity, double* L_x,
-                 double* time_SN_1, double* time_SN_2, int* ktype_1, int* ktype_2,
-                 int* comenv_count, int evol_flag, char* evol_hist)
+                 double* time_SN_1, double* time_SN_2, double* time_current,
+                 int* ktype_1, int* ktype_2, int* comenv_count, int evol_flag,
+                 char* evol_hist, int dco_flag)
 {
 
     const long int N=100; /* number of systems */
     // double maxt=15000.0; /* maximum time */
-    double dt=10.0; /* timestep */
+    double dt=1.0; /* timestep */
     double t=0.0; /* time */
     int i; /* counter */
 
@@ -194,6 +199,14 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
   	           stardata->star[1].mass,
   	           stardata->common.separation);
   #endif
+
+       /* End evolution loop once both stars have become compact objects */
+       if (dco_flag == 1){
+          if ((stardata->star[0].stellar_type > 9) && (stardata->star[1].stellar_type > 9)){
+             break;
+          }
+       }
+
 	     t += dt; // update the time
     }
 
@@ -223,6 +236,7 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
     *L_x = MAX(stardata->star[0].Xray_luminosity, stardata->star[1].Xray_luminosity);
     *time_SN_1 = stardata->star[0].time_sn;
     *time_SN_2 = stardata->star[1].time_sn;
+    *time_current = stardata->model.time;
     *ktype_1 = stardata->star[0].stellar_type;
     *ktype_2 = stardata->star[1].stellar_type;
     *comenv_count = stardata->model.comenv_count;

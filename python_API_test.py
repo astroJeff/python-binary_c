@@ -4,8 +4,8 @@ import binary_c
 
 
 def run_test_binary():
-    m1 = 12.0
-    m2 = 11.0
+    m1 = 15.0
+    m2 = 14.0
     eccentricity = 0.41
     metallicity = 0.02
     time = 33.895
@@ -18,12 +18,16 @@ def run_test_binary():
     sn_kick_theta_2 = 0.0
     sn_kick_phi_2 = 0.0
 
+    evol_flag = 0
+    dco_flag = 1
+
     output = binary_c.run_binary(m1, m2, orbital_period, eccentricity, metallicity, time,
                                  sn_kick_magnitude_1, sn_kick_theta_1, sn_kick_phi_1,
-                                 sn_kick_magnitude_2, sn_kick_theta_2, sn_kick_phi_2)
+                                 sn_kick_magnitude_2, sn_kick_theta_2, sn_kick_phi_2,
+                                 evol_flag, dco_flag)
 
     m1_out, m2_out, orbital_separation_out, eccentricity_out, system_velocity, L_x, \
-            time_SN_1, time_SN_2, ktype_1, ktype_2, comenv_count, evol_hist = output
+            time_SN_1, time_SN_2, time_current, ktype_1, ktype_2, comenv_count, evol_hist = output
 
     # print evol_hist
 
