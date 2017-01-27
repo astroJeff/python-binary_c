@@ -11,10 +11,10 @@ def run_test_binary():
     time = 33.895
     orbital_period = 4530.0
 
-    sn_kick_magnitude_1 = 0.0
+    sn_kick_magnitude_1 = 150.0
     sn_kick_theta_1 = 0.0
     sn_kick_phi_1 = 0.0
-    sn_kick_magnitude_2 = 0.0
+    sn_kick_magnitude_2 = 100.0
     sn_kick_theta_2 = 0.0
     sn_kick_phi_2 = 0.0
 

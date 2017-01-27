@@ -142,7 +142,7 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
             orbital_period
         );
     sprintf(argset2,
-            " sn_kick_magnitude_1 %g sn_kick_theta_1 %g sn_kick_phi_1 %g sn_kick_magnitude_2 %g sn_kick_theta_2 %g sn_kick_phi_2 %g",
+            "sn_kick_magnitude_1 %g sn_kick_theta_1 %g sn_kick_phi_1 %g sn_kick_magnitude_2 %g sn_kick_theta_2 %g sn_kick_phi_2 %g",
             v_kick_1,
             theta_kick_1,
             phi_kick_1,
@@ -151,9 +151,11 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
             phi_kick_2
           );
 
+
     /* combine two strings */
     snprintf(argstring, sizeof(char)*4096, "%s %s", argset1, argset2);
     // argstring = strcat(kickstring)
+
 
 
     // printf("argstring : %s\n",argstring);
@@ -166,7 +168,6 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
                         &store,
                         &argstring,
                         -1);
-
 
     /* log to /dev/null to ignore, /dev/stdout to view on screen */
     strcpy(stardata->preferences->log_filename,"/dev/null");
