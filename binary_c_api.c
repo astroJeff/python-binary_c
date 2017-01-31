@@ -156,6 +156,10 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
     snprintf(argstring, sizeof(char)*4096, "%s %s", argset1, argset2);
     // argstring = strcat(kickstring)
 
+    /* Free memory from arg strings for command line inputs */
+    free(argset1);
+    free(argset2);
+
 
 
     // printf("argstring : %s\n",argstring);
@@ -244,6 +248,8 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
 
     binary_c_free_memory(&stardata,TRUE,TRUE,FALSE);
     binary_c_free_store_contents(store);
+
+
     APIprint("API test finished\n");
 
     return 0;
