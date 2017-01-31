@@ -121,6 +121,14 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
     double t=0.0; /* time */
     int i; /* counter */
 
+    int bh_flag = 2; /* flag for BH formation prescription */
+                     /* 0 - Hurley et al. 2000/2002 */
+                     /* 1 - StarTrack, Belczynski */
+                     /* 2 - Spera et al. 2015 */
+                     /* 3 - Fryer et al. 2012, delayed */
+                     /* 4 - Fryer et al. 2012, rapid */
+
+
     /* set random seed */
     set_srand();
 
@@ -133,13 +141,15 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
 
     // double m1 = exp(randd(log(0.1),log(100.0)));
     sprintf(argset1,
-            "binary_c M_1 %g M_2 %g eccentricity %g metallicity %g max_evolution_time %g idum -10 orbital_period %g monte_carlo_kicks 0",
+            // "binary_c M_1 %g M_2 %g eccentricity %g metallicity %g max_evolution_time %g idum -10 orbital_period %g monte_carlo_kicks 0 ",
+            "binary_c M_1 %g M_2 %g eccentricity %g metallicity %g max_evolution_time %g idum -10 orbital_period %g monte_carlo_kicks 0 BH_prescription %i ",
             m1, // m2
             m2, // 0.1 < m2 < m1
             eccentricity, // ecc
             metallicity, // Z
             maxt, // max time (Myr)
-            orbital_period
+            orbital_period,
+            bh_flag
         );
     sprintf(argset2,
             "sn_kick_magnitude_1 %g sn_kick_theta_1 %g sn_kick_phi_1 %g sn_kick_magnitude_2 %g sn_kick_theta_2 %g sn_kick_phi_2 %g",
@@ -245,6 +255,7 @@ int run_binary ( double m1, double m2, double orbital_period, double eccentricit
     *ktype_1 = stardata->star[0].stellar_type;
     *ktype_2 = stardata->star[1].stellar_type;
     *comenv_count = stardata->model.comenv_count;
+
 
     binary_c_free_memory(&stardata,TRUE,TRUE,FALSE);
     binary_c_free_store_contents(store);
